@@ -5,11 +5,19 @@ import { Router } from "@angular/router";
 @Injectable()
 
 export class CurrService{
-    httpOptions = {
-        headers: new HttpHeaders({'Content-Type': 'application/json'})
-    };
+
+    private token = ''
+
+    // httpOptions = {
+    //     headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })
+    //     // headers: new HttpHeaders({'Content-Type': 'multipart/form-data','auth-token': localStorage.getItem('token')})
+    // };
 
     constructor(private http:HttpClient, private router:Router){}
+
+    httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })
+      };
 
     async getCurrencies(){
         const res = await this.http.get<any>('http://localhost:3000/currencies/list')
@@ -28,8 +36,20 @@ export class CurrService{
     }
 
     async transaction(details){
-        return await this.http.post<any>(`http://localhost:3000/main`,details, this.httpOptions)
-            .toPromise
+        return await this.http.post<any>(`http://localhost:3000/main`,details)
+            .toPromise()
     }
+
+    async showAlltransaction(id){
+        const res = await this.http.get<any>(`http://localhost:3000/main/${id}`)
+            .toPromise()
+
+        return res
+    }
+
+    // async getTransaction(details){
+    //     return await this.http.post<any>(`http://localhost:3000/main`,details, this.httpOptions)
+    //         .toPromise()
+    // }
 
 }

@@ -16,13 +16,17 @@
           <a class="nav-link" href="/rates">Rates</a>
         </li>
       </ul>
-      <div class="navbar-nav">
+
+      <ul class="navbar-nav">
+      <div class="navbar-nav" *ngIf="islogin!=true">
         <a class="nav-item nav-link" href="/login">Login</a>
       </div>
-      <div class="navbar-nav">
-        <button type="button" (click)="logout()"></button>
+      <div class="navbar-nav" *ngIf="islogin==true">
+        <button type="button" (click)="logout()">Logout</button>
         <!-- <a class="nav-item nav-link" href="/login">Logout</a> -->
       </div>
+      </ul>
+
     </div>
   </nav>
 </div>

@@ -10,14 +10,17 @@
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Converted Amount</label>
-            <input type="number" class="form-control" id="number" disabled formControlName="convertedAmt">
+            <input type="number" class="form-control" id="number" formControlName="convertedAmt">
         </div>
+        <label>Image</label>
+        <br>
+        <input type="file" accept="image/*" formControlName="filename" #imageFile>
         <!-- [(ngModel)]="convertedAmt"  -->
         <div class="form-group">
             <input type="hidden" class="form-control" id="number" formControlName="exchangeCreatedBy">
         </div>
 
-    <button type="submit">Submit</button>
+    <button type="submit" class="mt-3 btn btn-success">Submit</button>
     
     </form>
 

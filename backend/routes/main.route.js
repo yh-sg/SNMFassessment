@@ -23,33 +23,32 @@ const upload = multer({
     dest: process.env.TMP_DIR || '/Users/yh/Desktop/NUS/SNMF/SNMF-assessment/temp'
 })
 
-// router.post("/", upload.single('filename'), async (req, res) => {
-  router.post("/", async (req, res) => {
+router.post("/", upload.single('filename'), async (req, res) => {
 try {
-  // res.on('finish', () => {
-	// 	fs.unlink(req.file.path, () => { })
-	// })
+  res.on('finish', () => {
+		fs.unlink(req.file.path, () => { })
+	})
 
-	// fs.readFile(req.file.path,async(err, imgFile)=>{
-  //       const params = {
-  //           Bucket: AWS_S3_BUCKETNAME,
-  //           Key: req.file.filename, 
-  //           Body: imgFile,
-  //           ACL: 'public-read',
-  //           ContentType: req.file.mimetype,
-  //           ContentLength: req.file.size
-	// 	}
+	fs.readFile(req.file.path,async(err, imgFile)=>{
+        const params = {
+            Bucket: AWS_S3_BUCKETNAME,
+            Key: req.file.filename, 
+            Body: imgFile,
+            ACL: 'public-read',
+            ContentType: req.file.mimetype,
+            ContentLength: req.file.size
+		}
 		
-	// s3.putObject(params, (err, result)=>{
+	s3.putObject(params, (err, result)=>{
 		
-  // })
+  })
 
     let transaction = new Transacation({
       amount: req.body.amount,
       symbol: req.body.symbol,
       convertedAmt: req.body.convertedAmt,
       comment: req.body.comment,
-      // filename: req.file.filename,
+      filename: req.file.filename,
       // exchangeCreatedBy: req.user.id
       exchangeCreatedBy: req.body.exchangeCreatedBy
     });
@@ -59,7 +58,7 @@ try {
     res.status(201).json({
       message: "Data Created",
     });
-// })
+})
 } catch (error) {
        res.status(500).json({
         message: "Create data fail",
@@ -67,5 +66,40 @@ try {
       });
   }
 });
+
+router.get("/:id", async (req, res) => {
+  try {
+    let transactions = await Transacation.find();
+    // let filter = transactions.filter((f)=> f.exchangeCreatedBy.toString() === req.user.id);
+    let filter = transactions.filter((f)=> f.exchangeCreatedBy.toString() === req.params.id);
+        // console.log(req.user.id)
+        // console.log(transactions)
+        // console.log(filter)
+    res.status(200).send({
+      count: filter.length,
+      transactions: filter,
+      // transactions
+    });
+  } catch (err) {
+      res.status(500).json({
+        message: "Error SHOWALL transaction",
+      });
+    }
+  });
+
+  router.get("/transaction/:id", async (req, res) => {
+    try {
+      let transaction = await Transacation.findById(req.params.id);
+  
+      res.status(200).send({
+        message: "folder found",
+        transaction,
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: "error SHOWONE transaction",
+      });
+    }
+  });
 
 module.exports = router;

@@ -22,7 +22,7 @@ const ROUTES = [
   { path: 'error', component: ErrorComponent },
   { path: 'info', component: InfoComponent},
   { path: 'rates', component: RatesComponent},
-	{ path: '**', redirectTo: '/main', pathMatch: 'full' }
+	{ path: '**', redirectTo: '/login', pathMatch: 'full' }
 ]
 
 @NgModule({

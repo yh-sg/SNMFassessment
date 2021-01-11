@@ -1,13 +1,17 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
+import { nextTick } from "process";
 
 @Injectable()
 export class AuthService implements CanActivate{
 
     private token = ''
     private payload = ""
-    private headers = new HttpHeaders({'Content-Type': 'application/json'})
+
+    httpOptions = {
+        headers: new HttpHeaders({'Content-Type': 'application/json','auth-token': localStorage.getItem('token')})
+    };
 
     constructor(private http:HttpClient, private router:Router){}
 
@@ -22,9 +26,10 @@ export class AuthService implements CanActivate{
                 if(res.status==200){
                     this.token = res.body.token
                     this.payload = res.body.payload.user.id
+                    console.log(res.body)
                     localStorage.setItem('id', this.payload)
                     localStorage.setItem('token', this.token);
-                    // new HttpHeaders().append('auth-token', this.token)
+                    new HttpHeaders().append('auth-token', this.token)
                 }
                 return true
             }).catch(err=>{
@@ -37,18 +42,13 @@ export class AuthService implements CanActivate{
             }) 
     }
 
-    // autoLogin() {
-    //         let userId = localStorage.getItem('id')
-    //         let token = localStorage.getItem('token');
-    //         console.log(userId)
-    //     if (userId == "" || token == "") {
-    //       return;
-    //     }
-    // }
-
     getID(){
         return localStorage.getItem('id');
     }
+
+    // setHeader(){
+
+    // }
     
     logout(){
         localStorage.removeItem('id');
@@ -61,15 +61,15 @@ export class AuthService implements CanActivate{
 
     canActivate(route:ActivatedRouteSnapshot, state: RouterStateSnapshot){
         if(this.isLogin()){
-            console.log(this.isLogin());
-            console.log(this.token);
-            console.log(localStorage.getItem('token'));
+            // console.log(this.isLogin());
+            // console.log(this.token);
+            // console.log(localStorage.getItem('token'));
             
             return true
         }
-        console.log(this.token);
-        console.log(localStorage.getItem('token'));
-        console.log(this.isLogin());
+        // console.log(this.token);
+        // console.log(localStorage.getItem('token'));
+        // console.log(this.isLogin());
         return this.router.parseUrl('/error')
     }
 }

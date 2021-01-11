@@ -64,6 +64,9 @@ router.post("/signup", async (req, res) => {
         user: {
           id: user._id,
         },
+        email: {
+          email: user.email
+        }
       };
   
       jwt.sign(

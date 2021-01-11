@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { CurrService } from '../currencies.service';
@@ -16,6 +16,8 @@ export class MainComponent implements OnInit {
 
   convertedAmt = 100
 
+  @ViewChild('imageFile') imageFile: ElementRef;
+
   constructor(private authSvc:AuthService,private fb:FormBuilder,private currSvc:CurrService) { }
 
   ngOnInit(): void {
@@ -28,17 +30,22 @@ export class MainComponent implements OnInit {
       filename: this.fb.control('', [Validators.required]),
       exchangeCreatedBy: this.fb.control(this.id, [Validators.required])
     })
+    console.log(this.currSvc.showAlltransaction(this.id))
   }
 
-  submit(){
-    console.log(this.form.value)
-    let amount = this.form.get("amount").value;
-    let symbol = this.form.get("symbol").value;
-    let convertedAmt = this.form.get("convertedAmt").value;
-    // let filename
-    let exchangeCreatedBy = this.form.get("exchangeCreatedBy").value;
 
-    this.currSvc.transaction({amount, symbol, convertedAmt,exchangeCreatedBy})
+  submit(){
+    const formData = new FormData();
+
+    console.log(this.form.value)
+
+    formData.set('amount', this.form.get('amount').value);
+    formData.set('symbol', this.form.get('symbol').value);
+    formData.set('convertedAmt', this.form.get('convertedAmt').value);
+    formData.set('filename', this.imageFile.nativeElement.files[0]);
+    formData.set('exchangeCreatedBy', this.form.get("exchangeCreatedBy").value);
+
+    this.currSvc.transaction(formData)
   }
 
 
