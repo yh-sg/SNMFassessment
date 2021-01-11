@@ -1,0 +1,24 @@
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Exchange Amount</label>
+            <input type="number" class="form-control" id="number" placeholder="100" formControlName="amount">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Symbol</label>
+            <input type="Text" class="form-control" id="number" formControlName="symbol">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Converted Amount</label>
+            <input type="number" class="form-control" id="number" disabled formControlName="convertedAmt">
+        </div>
+        <!-- [(ngModel)]="convertedAmt"  -->
+        <div class="form-group">
+            <input type="hidden" class="form-control" id="number" formControlName="exchangeCreatedBy">
+        </div>
+
+    <button type="submit">Submit</button>
+    
+    </form>
+
+</div>
