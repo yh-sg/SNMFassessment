@@ -12,11 +12,22 @@ import { AuthService } from './auth.service';
 import { CurrService } from './currencies.service';
 import { InfoComponent } from './components/info.component';
 import { RatesComponent } from './components/rates.component';
+import { ShowallComponent } from './components/showall.component';
+import { ShowoneComponent } from './components/showone.component';
+import { SignupComponent } from './components/signup.component';
 
 const ROUTES = [
 	{ path: 'login', component: LoginComponent },
 	{ 
     path: 'main', component: MainComponent,
+    canActivate: [AuthService]
+  },
+  { 
+    path: 'home', component: ShowallComponent,
+    canActivate: [AuthService]
+  },
+  { 
+    path: 'home/:id', component: ShowoneComponent,
     canActivate: [AuthService]
   },
   { path: 'error', component: ErrorComponent },
@@ -32,7 +43,10 @@ const ROUTES = [
     MainComponent,
     ErrorComponent,
     InfoComponent,
-    RatesComponent
+    RatesComponent,
+    ShowallComponent,
+    ShowoneComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

@@ -2,10 +2,16 @@
     <h1>Compare the exchange rates!</h1>
     <form [formGroup]="form" (ngSubmit)="gotobase()">
         <div class="form-group">
-          <label for="base">Select the base to check the exchange rates!</label>
+          <label for="base">Select the base to check the exchange rates, check the past rate!</label>
           <select class="form-control" id="base" formControlName="base">
             <option *ngFor="let item of currencyList | keyvalue" [ngValue]="item.key">{{item.key}}</option>
           </select>
+        </div>
+        <div class="form-group row">
+          <label for="example-date-input" class="col-2 col-form-label">Date</label>
+          <div class="col-10">
+            <input class="form-control" type="date" [value]="today" [max]="today" [min]="1999-01-04" id="example-date-input" formControlName="date">
+          </div>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Check!</button>
      

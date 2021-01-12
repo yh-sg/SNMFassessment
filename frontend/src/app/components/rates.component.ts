@@ -13,11 +13,16 @@ export class RatesComponent implements OnInit {
 
   base
 
-  baseMoney
+  date
+
+  todayDate = new Date()
+
+  now = new Date();
+  day = ("0" + this.now.getDate()).slice(-2);
+  month = ("0" + (this.now.getMonth() + 1)).slice(-2);
+  today = this.now.getFullYear()+"-"+(this.month)+"-"+(this.day);
 
   rateLists:any = []
-
-  unit:number = 0
 
   currencyList:any = []
 
@@ -26,8 +31,7 @@ export class RatesComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       base: this.fb.control('SGD'),
-      baseMoney: this.fb.control(''),
-      unit: this.fb.control("")
+      date: this.fb.control(this.today),
     })
     this.currSvc.getCurrencies()
     .then(result=>{
@@ -37,13 +41,12 @@ export class RatesComponent implements OnInit {
 
   async gotobase(){
     this.base = this.form.value.base
-    // console.log(this.base)
-    await this.currSvc.getRates(this.form.value.base)
+    this.date = this.form.value.date
+    console.log(this.date)
+    await this.currSvc.getRatesWithDate(this.form.value.base,this.form.value.date)
     .then(result=>{
       this.rateLists = result
     })
-    console.log(this.rateLists)
-    console.log(this.currencyList)
   }
 
 }

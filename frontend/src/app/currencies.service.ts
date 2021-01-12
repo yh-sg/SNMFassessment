@@ -35,6 +35,13 @@ export class CurrService{
         return res
     }
 
+    async getRatesWithDate(base,date){
+        const res = await this.http.get<any>(`http://localhost:3000/currencies/ratesInfo?date=${date}&base=${base}`)
+            .toPromise()
+
+        return res
+    }
+
     async transaction(details){
         return await this.http.post<any>(`http://localhost:3000/main`,details)
             .toPromise()
@@ -42,6 +49,13 @@ export class CurrService{
 
     async showAlltransaction(id){
         const res = await this.http.get<any>(`http://localhost:3000/main/${id}`)
+            .toPromise()
+
+        return res
+    }
+
+    async showOnetransaction(id){
+        const res = await this.http.get<any>(`http://localhost:3000/main/transaction/${id}`)
             .toPromise()
 
         return res

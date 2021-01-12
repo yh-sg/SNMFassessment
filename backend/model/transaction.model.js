@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const moment = require('moment')
+
+let today = new Date();
+today.setHours(today.getHours()+8).toString()
 
 const transactionSchema = new mongoose.Schema(
     {
@@ -14,12 +18,17 @@ const transactionSchema = new mongoose.Schema(
             type: Number,
             require: true,
         },
-        comment: {
-            type: String,
-        },
         filename:{
             type: String,
             // require: true
+        },
+        createdDate: {
+            type: Date,
+            default: today
+          },
+        buySell: {
+            type: String,
+            require: true,
         },
         exchangeCreatedBy:{
             type: mongoose.Schema.Types.ObjectId,
@@ -28,6 +37,10 @@ const transactionSchema = new mongoose.Schema(
     },
         { timestamps: true }
     );
+
+    // transactionSchema.methods.date = function () {
+    //     return moment(this.createdDate).format("MMMM Do YYYY");
+    // };
 
 const Transacation = mongoose.model("Transaction", transactionSchema);
 module.exports = Transacation;

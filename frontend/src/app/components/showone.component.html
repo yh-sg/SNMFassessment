@@ -1,0 +1,7 @@
+<div class="container">
+    <h1 (click)="click()">AMT</h1>
+    <div *ngFor="let item of showOne|keyvalue">
+        <p>{{item.key}}: {{item.value}}</p>
+    </div>
+</div>
+

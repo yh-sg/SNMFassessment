@@ -5,6 +5,7 @@ const AWS = require('aws-sdk')
 const multer = require('multer');
 const fs = require('fs')
 const checkToken = require("../config/config");
+const mongoose = require("mongoose")
 
 const AWS_S3_HOSTNAME = process.env.AWS_S3_HOSTNAME;
 const AWS_S3_ACCESS_KEY = process.env.AWS_S3_ACCESS_KEY;
@@ -48,6 +49,7 @@ try {
       symbol: req.body.symbol,
       convertedAmt: req.body.convertedAmt,
       comment: req.body.comment,
+      buySell: req.body.buySell,
       filename: req.file.filename,
       // exchangeCreatedBy: req.user.id
       exchangeCreatedBy: req.body.exchangeCreatedBy
@@ -69,17 +71,36 @@ try {
 
 router.get("/:id", async (req, res) => {
   try {
-    let transactions = await Transacation.find();
-    // let filter = transactions.filter((f)=> f.exchangeCreatedBy.toString() === req.user.id);
-    let filter = transactions.filter((f)=> f.exchangeCreatedBy.toString() === req.params.id);
-        // console.log(req.user.id)
-        // console.log(transactions)
-        // console.log(filter)
+
+    // let transactions = await Transacation.find();
+    // // let filter = transactions.filter((f)=> f.exchangeCreatedBy.toString() === req.user.id);
+    // let filter = transactions.filter((f)=> f.exchangeCreatedBy.toString() === req.params.id);
+    //     // console.log(req.user.id)
+    //     // console.log(transactions)
+    //     // console.log(filter)
+    // res.status(200).send({
+    //   count: filter.length,
+    //   transactions: filter,
+    //   // transactions
+    // });
+
+
+    let transactions = await Transacation.aggregate([
+      {
+        $match: {'exchangeCreatedBy': {$in:[mongoose.Types.ObjectId(req.params.id)]}} 
+      }
+    ]);
+
+    // let transactions = await Transacation.aggregate([
+    //   {
+    //     $match:{exchangeCreatedBy: new mongoose.Types.ObjectId(req.params.id)}
+    //   }
+    // ]);
+
     res.status(200).send({
-      count: filter.length,
-      transactions: filter,
-      // transactions
+      transactions
     });
+
   } catch (err) {
       res.status(500).json({
         message: "Error SHOWALL transaction",

@@ -9,17 +9,37 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent implements OnInit  {
 
-  islogin:boolean = false
+  // islogin:boolean = false
 
-  constructor(private authSvc:AuthService,private router:Router){}
+  public authToken: boolean;
+
+  constructor(private authSvc:AuthService,private router:Router){
+    this.authSvc.userLoggedIn.subscribe((token) => {
+      if(token != null){
+        this.authToken = true
+      }else{
+        this.authToken = false
+      }
+    })
+  }
 
   ngOnInit(): void {
     // this.authSvc.autoLogin();
-    if(this.authSvc.isLogin()===true){
-      this.islogin = true
+
+    // console.log(this.authToken)
+
+    // if(this.authSvc.isLogin()===true){
+    //   this.islogin = true
+    // }else{
+    //   this.islogin = false
+    // }
+
+    if(this.authSvc.isUserLoggedin()){
+      this.authToken = true
     }else{
-      this.islogin = false
+      this.authToken = false
     }
+
   }
 
   logout(){

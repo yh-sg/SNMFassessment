@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CurrService } from '../currencies.service';
 
@@ -11,6 +12,8 @@ import { CurrService } from '../currencies.service';
 export class MainComponent implements OnInit {
 
   form:FormGroup
+
+  buySell = "buy"
 
   id // _id from mongoDB
 
@@ -29,7 +32,7 @@ export class MainComponent implements OnInit {
 
   @ViewChild('imageFile') imageFile: ElementRef;
 
-  constructor(private authSvc:AuthService,private fb:FormBuilder,private currSvc:CurrService) { }
+  constructor(private authSvc:AuthService,private fb:FormBuilder,private currSvc:CurrService,private router:Router) { }
 
   ngOnInit(): void {
     this.id = this.authSvc.getID()
@@ -48,6 +51,7 @@ export class MainComponent implements OnInit {
     })
 
     this.form = this.fb.group({
+      buySell: this.fb.control('buy',[Validators.required, Validators.min(0)]),
       amount: this.fb.control('',[Validators.required, Validators.min(0)]),
       symbol: this.fb.control('USD', [Validators.required]),
       convertedAmt: this.fb.control(this.convertedAmt, [Validators.required]),
@@ -58,8 +62,8 @@ export class MainComponent implements OnInit {
 
     this.form.controls['symbol'].valueChanges.subscribe(change=>{
       this.symbol = change;
-      console.log(this.symbol)
-      console.log(this.rateListsSGD[this.symbol])
+      // console.log(this.symbol)
+      // console.log(this.rateListsSGD[this.symbol])
       this.symbolToAmt = this.rateListsSGD[this.symbol]
     })
 
@@ -67,11 +71,27 @@ export class MainComponent implements OnInit {
       this.amount = change;
       // console.log(this.amount)
       // console.log(this.symbolToAmt)
+      if(this.buySell=='buy'){
       this.convertedAmt = this.symbolToAmt * this.amount
+      }else{
+        this.convertedAmt = this.amount / this.symbolToAmt
+      }
       // console.log(this.convertedAmt)
       this.form.controls['convertedAmt'].setValue(this.convertedAmt);
     })
     // console.log(this.currSvc.showAlltransaction(this.id))
+
+    this.form.controls['buySell'].valueChanges.subscribe(change=>{
+      this.buySell = change;
+      console.log(this.buySell)
+      if(this.buySell=='buy'){
+        this.convertedAmt = this.symbolToAmt * this.amount
+        }else{
+          this.convertedAmt = this.amount / this.symbolToAmt
+        }
+        // console.log(this.convertedAmt)
+        this.form.controls['convertedAmt'].setValue(this.convertedAmt);
+    })
   }
 
   submit(){
@@ -79,6 +99,7 @@ export class MainComponent implements OnInit {
 
     console.log(this.form.value)
 
+    formData.set('buySell', this.form.get('buySell').value);
     formData.set('amount', this.form.get('amount').value);
     formData.set('symbol', this.form.get('symbol').value);
     formData.set('convertedAmt', this.form.get('convertedAmt').value);
@@ -86,6 +107,16 @@ export class MainComponent implements OnInit {
     formData.set('exchangeCreatedBy', this.form.get("exchangeCreatedBy").value);
 
     this.currSvc.transaction(formData)
+
+    window.alert("Transaction Success, we will contact you through email shortly. Thank you.")
+
+    this.form.reset()
+
+    this.router.navigate(['/home'])
+  }
+
+  back(){
+    this.router.navigate(['/home'])
   }
 
 }

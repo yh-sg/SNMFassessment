@@ -25,9 +25,16 @@ export class LoginComponent implements OnInit {
     console.log(this.form.value);
     this.authSvc.login(this.form.get('username').value, this.form.get('password').value)
     .then(result=>{
-      console.log(result)
-      this.router.navigate(["/main"])
+      // console.log(result)
+      if(result==true){
+        this.router.navigate(["/home"])
+      }
+      
+      if(result==false){
+        window.alert("The username or password is wrong.")
+      }
     })
+    this.form.reset()
   }
 
 }

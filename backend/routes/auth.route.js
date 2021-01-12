@@ -4,8 +4,26 @@ const User = require("../model/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const checkToken = require("../config/config");
+const nodemailer = require('nodemailer')
 
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
+
+//nodemailer step one, for admin
+let transporter = nodemailer.createTransport({
+  service:'gmail',
+  auth:{
+    user:process.env.EMAIL,
+    pass:process.env.EMAILPW
+  }
+})
+
+//step two
+let mailOptions = {
+  from: process.env.EMAIL,  // Admin email
+  to:process.env.TOEMAIL || user.email,  // Demo purpose, for signup user email, use user.email
+  subject: 'Thank you for sign-up to currency exchange',
+  text: 'Thank you for signing up. Do enjoy the app!'
+}
 
 router.post("/signup", async (req, res) => {
     let { username, email, password } = req.body;
@@ -23,6 +41,16 @@ router.post("/signup", async (req, res) => {
           id: user._id,
         },
       };
+
+      //step three, if real app, change env to user.email
+      transporter.sendMail(mailOptions, function(err,data){
+        if(err){
+          console.log('Error Occurs: ', err);
+        }else{
+          console.log(data);
+          console.log('Email sent!');
+        }
+      })
       //token on login
       jwt.sign(
         payload,

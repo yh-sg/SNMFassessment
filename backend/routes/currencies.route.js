@@ -28,4 +28,21 @@ router.get("/rates",async(req,res)=>{
     return res.status(200).json(jsResult);
 })
 
+router.get("/ratesInfo",async(req,res)=>{
+    const search = req.query['base']
+    const date = req.query['date']
+    const url = withQuery(
+        URL2,
+        {
+            base:search,
+            date:date
+        }
+    )
+    // console.log(url)
+    let result = await fetch(url)
+    let jsResult = await result.json();
+    // console.log(jsResult)
+    return res.status(200).json(jsResult);
+})
+
 module.exports = router;
