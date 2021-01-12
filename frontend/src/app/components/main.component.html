@@ -1,27 +1,43 @@
 <div class="container">
     <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="form-group">
-            <label for="exampleFormControlInput1">Exchange Amount</label>
-            <input type="number" class="form-control" id="number" placeholder="100" formControlName="amount">
+            <label for="amount">Exchange Amount</label>
+            <input type="number" class="form-control" [(ngModel)]="amount" id="amount" placeholder="100" formControlName="amount">
         </div>
+
+
         <div class="form-group">
-            <label for="exampleFormControlInput1">Symbol</label>
-            <input type="Text" class="form-control" id="number" formControlName="symbol">
+            <label for="symbol">Select buy symbol!</label>
+            <select class="form-control" id="symbol" formControlName="symbol">
+              <!-- <option *ngFor="let item of currencyList | keyvalue" [ngValue]="item.key" value="item.key">{{item.key}}</option> -->
+              <option *ngFor="let item of currencyList | keyvalue" [value]="item.key">{{item.key}}</option>
+            </select>
         </div>
+
         <div class="form-group">
-            <label for="exampleFormControlInput1">Converted Amount</label>
-            <input type="number" class="form-control" id="number" formControlName="convertedAmt">
+            <label for="convertedAmt">Converted Amount</label>
+            <input type="number" class="form-control" disabled id="convertedAmt" formControlName="convertedAmt">
         </div>
-        <label>Image</label>
+        <label>Identification</label>
         <br>
         <input type="file" accept="image/*" formControlName="filename" #imageFile>
-        <!-- [(ngModel)]="convertedAmt"  -->
+
         <div class="form-group">
             <input type="hidden" class="form-control" id="number" formControlName="exchangeCreatedBy">
         </div>
 
-    <button type="submit" class="mt-3 btn btn-success">Submit</button>
+    <button type="submit" class="mt-3 btn btn-success" [disabled]="form.invalid">Submit</button>
     
     </form>
+
+    <br>
+
+        <div *ngIf="rateLists.length!=0">
+            Date: {{rateLists.date}}
+            <ul class="list-group" *ngFor="let item of rateLists.rates | keyvalue">
+                <li class="list-group-item">{{item.key}} - {{item.value}}</li>
+            </ul>
+    
+          </div>
 
 </div>

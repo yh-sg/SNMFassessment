@@ -22,7 +22,7 @@
         <a class="nav-item nav-link" href="/login">Login</a>
       </div>
       <div class="navbar-nav" *ngIf="islogin==true">
-        <button type="button" (click)="logout()">Logout</button>
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
         <!-- <a class="nav-item nav-link" href="/login">Logout</a> -->
       </div>
       </ul>

@@ -10,6 +10,7 @@
         <button type="submit" class="btn btn-primary mt-3">Check!</button>
      
       <hr>
+
       <div *ngIf="rateLists.length!=0">
         <h1>Base: {{base}} | Date: {{rateLists.date}} | 1 {{base}} Conversion Rate</h1>
 
@@ -17,15 +18,7 @@
             <li class="list-group-item">{{item.key}} - {{item.value}}</li>
         </ul>
 
-        <!-- <div class="mt-3">
-            Calculate
-            <input type="number"placeholder="10" min="0" [(ngModel)]="unit" formControlName="unit">
-            <select class="form-control" id="baseMoney">
-                <option *ngFor="let item of rateLists.rates | keyvalue" [ngValue]="item.key">{{item.key}}</option>
-            </select>
-            <em>${{unit}}</em>
-        </div> -->
-
       </div>
+      
     </form>
 </div>

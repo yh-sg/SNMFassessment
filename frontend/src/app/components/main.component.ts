@@ -12,9 +12,20 @@ export class MainComponent implements OnInit {
 
   form:FormGroup
 
-  id
+  id // _id from mongoDB
 
-  convertedAmt = 100
+  currencyList //List of the currency
+
+  // exchangeRate:number
+
+  rateLists:any[] = [] //Return all ratelist details
+  rateListsSGD:any[] = [] //Return all rates using SGD as base
+
+  amount:number = 1; //default amount, adjusts by user
+
+  symbol //buying symbol for the customer
+  symbolToAmt //the amount after converting
+  convertedAmt:number //The amount that the user will get after buying
 
   @ViewChild('imageFile') imageFile: ElementRef;
 
@@ -22,17 +33,46 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.authSvc.getID()
+
+    this.currSvc.getCurrencies()
+    .then(result=>{
+      this.currencyList = result
+      this.symbol = "USD"
+    })   
+
+    this.currSvc.getRates("SGD")
+    .then(result=>{
+      this.rateLists = result
+      this.rateListsSGD = result.rates
+      this.symbolToAmt = this.rateListsSGD["USD"]
+    })
+
     this.form = this.fb.group({
       amount: this.fb.control('',[Validators.required, Validators.min(0)]),
-      symbol: this.fb.control('', [Validators.required]),
+      symbol: this.fb.control('USD', [Validators.required]),
       convertedAmt: this.fb.control(this.convertedAmt, [Validators.required]),
       //comment: this.fb.control('', [Validators.required]),
       filename: this.fb.control('', [Validators.required]),
       exchangeCreatedBy: this.fb.control(this.id, [Validators.required])
     })
-    console.log(this.currSvc.showAlltransaction(this.id))
-  }
 
+    this.form.controls['symbol'].valueChanges.subscribe(change=>{
+      this.symbol = change;
+      console.log(this.symbol)
+      console.log(this.rateListsSGD[this.symbol])
+      this.symbolToAmt = this.rateListsSGD[this.symbol]
+    })
+
+    this.form.controls['amount'].valueChanges.subscribe(change=>{
+      this.amount = change;
+      // console.log(this.amount)
+      // console.log(this.symbolToAmt)
+      this.convertedAmt = this.symbolToAmt * this.amount
+      // console.log(this.convertedAmt)
+      this.form.controls['convertedAmt'].setValue(this.convertedAmt);
+    })
+    // console.log(this.currSvc.showAlltransaction(this.id))
+  }
 
   submit(){
     const formData = new FormData();
@@ -47,6 +87,5 @@ export class MainComponent implements OnInit {
 
     this.currSvc.transaction(formData)
   }
-
 
 }
