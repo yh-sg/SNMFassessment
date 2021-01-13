@@ -50,6 +50,8 @@ try {
       convertedAmt: req.body.convertedAmt,
       comment: req.body.comment,
       buySell: req.body.buySell,
+      lat: req.body.lat,
+      lon: req.body.lon,
       filename: req.file.filename,
       // exchangeCreatedBy: req.user.id
       exchangeCreatedBy: req.body.exchangeCreatedBy
@@ -112,9 +114,8 @@ router.get("/:id", async (req, res) => {
     try {
       let transaction = await Transacation.findById(req.params.id);
   
-      res.status(200).send({
-        message: "folder found",
-        transaction,
+      res.status(200).json({
+        transaction
       });
     } catch (err) {
       res.status(500).json({

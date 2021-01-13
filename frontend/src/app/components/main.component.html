@@ -4,19 +4,19 @@
         <div class="form-group">
             <label for="symbol">Buy/Sell</label>
             <select class="form-control" id="symbol" formControlName="buySell">
-              <option value="buy">Buy</option>
-              <option value="sell">Sell</option>
+              <option value="Buy">Buy</option>
+              <option value="Sell">Sell</option>
             </select>
         </div>
 
         <div class="form-group">
             <label for="amount">Exchange Amount</label>
-            <input type="number" class="form-control" [(ngModel)]="amount" id="amount" placeholder="100" formControlName="amount">
+            <input type="number" class="form-control" [(ngModel)]="amount" min=0 id="amount" placeholder="100" formControlName="amount">
         </div>
 
 
         <div class="form-group">
-            <label for="symbol">Select buy symbol!</label>
+            <label for="symbol">Select buy/sell symbol!</label>
             <select class="form-control" id="symbol" formControlName="symbol">
               <!-- <option *ngFor="let item of currencyList | keyvalue" [ngValue]="item.key" value="item.key">{{item.key}}</option> -->
               <option *ngFor="let item of currencyList | keyvalue" [value]="item.key">{{item.key}}</option>
@@ -40,14 +40,25 @@
     <button type="button" class="mt-3 btn btn-warning" (click)="back()">Back</button>
     </form>
 
-    <br>
+    <hr>
+
+    <h3>Deliver to your current location</h3>
+    <div id="map"></div>
+
+    <hr>
 
         <div *ngIf="rateLists.length!=0">
+            <h2>Exchange Rate List</h2>
+            <br>
             Date: {{rateLists.date}}
             <ul class="list-group" *ngFor="let item of rateLists.rates | keyvalue">
-                <li class="list-group-item">{{item.key}} - {{item.value}}</li>
+                <!-- <li class="list-group-item" >{{item.key}} - {{item.value}}</li> -->
+                <li class="list-group-item" [ngClass]="{'selectStyle':symbol === item.key}">{{item.key}} - {{item.value}}</li>
             </ul>
     
           </div>
+
+    <hr>
+        
 
 </div>

@@ -17,7 +17,8 @@ import { ShowoneComponent } from './components/showone.component';
 import { SignupComponent } from './components/signup.component';
 
 const ROUTES = [
-	{ path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path:'signup', component: SignupComponent },
 	{ 
     path: 'main', component: MainComponent,
     canActivate: [AuthService]

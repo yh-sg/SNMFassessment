@@ -1,7 +1,23 @@
 <div class="container">
-    <h1 (click)="click()">AMT</h1>
-    <div *ngFor="let item of showOne|keyvalue">
-        <p>{{item.key}}: {{item.value}}</p>
-    </div>
+    <h2 class="mt-3 mb-3">Exchange Details</h2>
+    <ul class="list-group">
+        <li class="list-group-item">Option: {{buySell}}</li>
+        <div *ngIf="buySell=='Buy'">
+            <li class="list-group-item">Amount: SGD {{amount}}</li>
+            <li class="list-group-item">Converted Amount: {{symbol}} {{convertAmt}}</li>
+        </div>
+        <div *ngIf="buySell=='Sell'">
+            <li class="list-group-item">Amount: {{symbol}} {{amount}}</li>
+            <li class="list-group-item">Converted Amount: SGD {{convertAmt}}</li>
+        </div>
+        <li class="list-group-item">Created Date: {{createdDate}}</li>
+        <li class="list-group-item">Created Time: {{createdTime}}</li>
+      </ul>
+      <h5>Identification</h5>
+      <img [src]="s3+uploadedImg">
+      <br>
+    <button type="button" class="btn btn-outline-success mt-3" [routerLink]="['/home']" routerLinkActive="router-link-active" >Back</button>
+
+    
 </div>
 

@@ -1,16 +1,17 @@
   <div class="container">
     <div class="row">
+      <h1>Past transactions</h1>
       <div class="col-4 mt-3" *ngFor="let item of showAllData.transactions | keyvalue">
         <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">Exchanged Rate: {{item.value.symbol}}</h5>
               <h6 class="card-subtitle mb-2 text-muted">Date: {{item.value.createdDate.substring(0, 10)}}</h6>
-              <!-- <p class="card-text">{{}}</p> -->
+              <p class="card-text">{{item.value.buySell}} Service</p>
               <button type="button" class="btn btn-outline-success" (click)="goToDetail(item.value._id)">See Details</button>
             </div>
           </div>
       </div>
     </div>
-    <br>
+    <hr>
     <button type="button" class="btn btn-info" (click)="goToBuyCurrency()">Buy/Sell Currency</button>
   </div>

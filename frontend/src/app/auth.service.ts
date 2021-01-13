@@ -9,6 +9,8 @@ export class AuthService implements CanActivate{
 
     private token = ''
     private payload = ""
+    private payload2 = ''
+    private payload3 = ''
 
     public userLoggedIn = new Subject();
 
@@ -29,8 +31,12 @@ export class AuthService implements CanActivate{
                 if(res.status==200){
                     this.token = res.body.token
                     this.payload = res.body.payload.user.id
+                    this.payload2 = res.body.payload.other.map
+                    this.payload3 = res.body.payload.other.s3
                     localStorage.setItem('id', this.payload)
                     localStorage.setItem('token', this.token);
+                    localStorage.setItem('map', this.payload2);
+                    localStorage.setItem('s3', this.payload3);
                     this.userLoggedIn.next(this.token);
                     // console.log(res.body)
                     // new HttpHeaders().append('auth-token', this.token)
@@ -46,8 +52,32 @@ export class AuthService implements CanActivate{
             }) 
     }
 
+    signup(username, password, email):Promise<any>{
+        return this.http.post<any>('http://localhost:3000/auth/signup',
+        {username, password, email},{observe: 'response'})
+        .toPromise()
+        .then(res=>{
+            if(res.status==200){
+            }
+            return true
+        }).catch(err=>{
+            if(err.status==400){
+                console.log(err);
+            }
+            return false
+        }) 
+    }
+
     getID(){
         return localStorage.getItem('id');
+    }
+
+    getMap(){
+        return localStorage.getItem('map')
+    }
+
+    gets3(){
+        return localStorage.getItem('s3')
     }
 
     //new method
@@ -59,6 +89,8 @@ export class AuthService implements CanActivate{
     logout(){
         localStorage.removeItem('id');
         localStorage.removeItem('token');
+        localStorage.removeItem('map');
+        localStorage.removeItem('s3');
         this.userLoggedIn.next()
         this.userLoggedIn.complete()
     }

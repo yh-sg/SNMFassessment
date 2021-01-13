@@ -40,6 +40,13 @@ router.post("/signup", async (req, res) => {
         user: {
           id: user._id,
         },
+        email: {
+          email: user.email
+        },
+        other:{
+          map: process.env.GMAPIKEY,
+          s3: process.env.S3
+        },
       };
 
       //step three, if real app, change env to user.email
@@ -94,6 +101,10 @@ router.post("/signup", async (req, res) => {
         },
         email: {
           email: user.email
+        },
+        other:{
+          map: process.env.GMAPIKEY,
+          s3: process.env.S3
         }
       };
   

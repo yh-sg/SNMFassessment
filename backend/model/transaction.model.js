@@ -30,6 +30,12 @@ const transactionSchema = new mongoose.Schema(
             type: String,
             require: true,
         },
+        lat: {
+            type: Number,
+        },
+        lon: {
+            type: Number,
+        },
         exchangeCreatedBy:{
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",

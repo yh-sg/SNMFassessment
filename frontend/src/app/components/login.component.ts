@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
 
   form:FormGroup
 
+  username
+
   constructor(private fb:FormBuilder, private router:Router, private authSvc:AuthService) { }
 
   ngOnInit(): void {
@@ -23,11 +25,13 @@ export class LoginComponent implements OnInit {
 
   login(){
     console.log(this.form.value);
+    this.username=this.form.get('username').value
     this.authSvc.login(this.form.get('username').value, this.form.get('password').value)
     .then(result=>{
       // console.log(result)
       if(result==true){
         this.router.navigate(["/home"])
+        window.alert(`Logged in! Welcome,${this.username}`)
       }
       
       if(result==false){

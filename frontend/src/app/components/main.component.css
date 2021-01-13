@@ -1,0 +1,13 @@
+#map{
+    height: 60vh;
+    width: 80vh;
+    margin:auto
+}
+
+h3{
+    text-align: center;
+}
+
+.selectStyle{
+    background-color: forestgreen;
+}

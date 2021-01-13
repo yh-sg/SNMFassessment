@@ -57,7 +57,7 @@ export class CurrService{
     async showOnetransaction(id){
         const res = await this.http.get<any>(`http://localhost:3000/main/transaction/${id}`)
             .toPromise()
-
+        // console.log(res)
         return res
     }
 

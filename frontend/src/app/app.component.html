@@ -18,17 +18,12 @@
       </ul>
 
       <ul class="navbar-nav">
-      <!-- <div class="navbar-nav" *ngIf="islogin!=true"> -->
-        <div class="navbar-nav" *ngIf="!authToken">
-        <a class="nav-item nav-link" href="/login">Login</a>
-      </div>
       <div class="navbar-nav" *ngIf="!authToken">
+        <a class="nav-item nav-link" href="/login">Login</a>
         <a class="nav-item nav-link" href="/signup">Signup</a>
       </div>
-      <!-- <div class="navbar-nav" *ngIf="islogin==true"> -->
         <div class="navbar-nav" *ngIf="authToken">
         <a class="nav-item nav-link" (click)="logout()">Logout</a>
-        <!-- <a class="nav-item nav-link" href="/login">Logout</a> -->
       </div>
       </ul>
 
