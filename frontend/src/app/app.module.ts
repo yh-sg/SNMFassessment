@@ -16,6 +16,10 @@ import { ShowallComponent } from './components/showall.component';
 import { ShowoneComponent } from './components/showone.component';
 import { SignupComponent } from './components/signup.component';
 
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 const ROUTES = [
   { path: 'login', component: LoginComponent },
   { path:'signup', component: SignupComponent },
@@ -54,7 +58,9 @@ const ROUTES = [
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    NgbCollapseModule
+    // NgbModule
   ],
   providers: [AuthService, CurrService],
   bootstrap: [AppComponent]

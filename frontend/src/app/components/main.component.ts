@@ -90,7 +90,7 @@ export class MainComponent implements OnInit {
       // console.log(this.amount)
       // console.log(this.symbolToAmt)
       if(this.buySell=='Buy'){
-      this.convertedAmt = this.symbolToAmt * this.amount
+        this.convertedAmt = this.symbolToAmt * this.amount
       }else{
         this.convertedAmt = this.amount / this.symbolToAmt
       }
@@ -122,7 +122,7 @@ export class MainComponent implements OnInit {
     formData.set('buySell', this.form.get('buySell').value);
     formData.set('amount', this.form.get('amount').value);
     formData.set('symbol', this.form.get('symbol').value);
-    formData.set('convertedAmt', this.form.get('convertedAmt').value);
+    formData.set('convertedAmt', this.form.get('convertedAmt').value.toFixed(2));
     formData.set('filename', this.imageFile.nativeElement.files[0]);
     formData.set('exchangeCreatedBy', this.form.get("exchangeCreatedBy").value);
     formData.set('lat', this.lat);

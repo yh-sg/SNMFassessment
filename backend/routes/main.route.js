@@ -93,12 +93,6 @@ router.get("/:id", async (req, res) => {
       }
     ]);
 
-    // let transactions = await Transacation.aggregate([
-    //   {
-    //     $match:{exchangeCreatedBy: new mongoose.Types.ObjectId(req.params.id)}
-    //   }
-    // ]);
-
     res.status(200).send({
       transactions
     });
@@ -123,5 +117,21 @@ router.get("/:id", async (req, res) => {
       });
     }
   });
+
+  // router.delete("/delTransaction/:id", async (req, res) => {
+  //   try {
+  //     let folderDelete = await Folder.findByIdAndDelete(req.params.id);
+  
+  //     if (folderDelete) {
+  //       res.status(200).json({
+  //         message: "Deleted transaction",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     res.status(500).json({
+  //       message: "Failed to delete transaction",
+  //     });
+  //   }
+  // });
 
 module.exports = router;

@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
 mongoose.connect(
-  process.env.MONGODB,
+  process.env.MONGODBURL,
   {
     useCreateIndex: true,
     useNewUrlParser: true,

@@ -61,6 +61,11 @@ export class CurrService{
         return res
     }
 
+    // async delTransaction(id):Promise<any> {
+    //     return await this.http.delete<any>(`http://localhost:3000/delTransaction/${id}`)
+    //         .toPromise()
+    // }
+
     // async getTransaction(details){
     //     return await this.http.post<any>(`http://localhost:3000/main`,details, this.httpOptions)
     //         .toPromise()

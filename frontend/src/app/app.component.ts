@@ -11,6 +11,8 @@ export class AppComponent implements OnInit  {
 
   // islogin:boolean = false
 
+  public navbarCollapsed = true;
+
   public authToken: boolean;
 
   constructor(private authSvc:AuthService,private router:Router){
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit  {
 
   logout(){
     this.authSvc.logout();
+    // window.alert(`Logged out!`)
     this.router.navigate(['/login'])
   }
 
