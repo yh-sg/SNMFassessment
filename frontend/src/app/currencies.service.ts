@@ -20,7 +20,7 @@ export class CurrService{
       };
 
     async getCurrencies(){
-        const res = await this.http.get<any>('http://localhost:3000/currencies/list')
+        const res = await this.http.get<any>('currencies/list')
             .toPromise()
         
         // console.log(res)
@@ -28,7 +28,7 @@ export class CurrService{
     }
 
     async getRates(base){
-        const res = await this.http.get<any>(`http://localhost:3000/currencies/rates?base=${base}`)
+        const res = await this.http.get<any>(`currencies/rates?base=${base}`)
             .toPromise()
         
         // console.log(res)
@@ -36,26 +36,26 @@ export class CurrService{
     }
 
     async getRatesWithDate(base,date){
-        const res = await this.http.get<any>(`http://localhost:3000/currencies/ratesInfo?date=${date}&base=${base}`)
+        const res = await this.http.get<any>(`currencies/ratesInfo?date=${date}&base=${base}`)
             .toPromise()
 
         return res
     }
 
     async transaction(details){
-        return await this.http.post<any>(`http://localhost:3000/main`,details)
+        return await this.http.post<any>(`main`,details)
             .toPromise()
     }
 
     async showAlltransaction(id){
-        const res = await this.http.get<any>(`http://localhost:3000/main/${id}`)
+        const res = await this.http.get<any>(`main/${id}`)
             .toPromise()
 
         return res
     }
 
     async showOnetransaction(id){
-        const res = await this.http.get<any>(`http://localhost:3000/main/transaction/${id}`)
+        const res = await this.http.get<any>(`main/transaction/${id}`)
             .toPromise()
         // console.log(res)
         return res

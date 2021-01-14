@@ -50,6 +50,26 @@ export class AppComponent implements OnInit  {
     this.router.navigate(['/login'])
   }
 
+  rates(){
+    this.router.navigate(['/rates'])
+  }
+
+  info(){
+    this.router.navigate(['/info'])
+  }
+
+  home(){
+    this.router.navigate(['/home'])
+  }
+
+  login(){
+    this.router.navigate(['/login'])
+  }
+
+  signup(){
+    this.router.navigate(['/signup'])
+  }
+
   
 
   title = 'frontend';

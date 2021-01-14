@@ -23,7 +23,7 @@ export class AuthService implements CanActivate{
     login(username, password): Promise<Boolean> {
         // write a call to the backend
         //return the status code
-        return this.http.post<any>('http://localhost:3000/auth/login',
+        return this.http.post<any>('auth/login',
             {username, password},{observe: 'response'})
             .toPromise()
             .then(res=>{
@@ -53,7 +53,7 @@ export class AuthService implements CanActivate{
     }
 
     signup(username, password, email):Promise<any>{
-        return this.http.post<any>('http://localhost:3000/auth/signup',
+        return this.http.post<any>('auth/signup',
         {username, password, email},{observe: 'response'})
         .toPromise()
         .then(res=>{

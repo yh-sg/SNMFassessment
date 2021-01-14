@@ -10,20 +10,20 @@
       <!-- <div class="collapse navbar-collapse justify-content-between" id="navbarNav"> -->
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" (click)="home()">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/info">Currency-Info</a>
+          <a class="nav-link" (click)="info()">Currency-Info</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/rates">Rates</a>
+          <a class="nav-link" (click)="rates()">Rates</a>
         </li>
       </ul>
 
       <ul class="navbar-nav">
       <div class="navbar-nav" *ngIf="!authToken">
-        <a class="nav-item nav-link" href="/login">Login</a>
-        <a class="nav-item nav-link" href="/signup">Signup</a>
+        <a class="nav-item nav-link" (click)="login()">Login</a>
+        <a class="nav-item nav-link" (click)="signup()">Signup</a>
       </div>
         <div class="navbar-nav" *ngIf="authToken">
         <a class="nav-item nav-link" (click)="logout()">Logout</a>
