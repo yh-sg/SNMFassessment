@@ -22,6 +22,8 @@ app.get("*", (req, res) => {
   res.status(404).json({ message: "Error!" });
 });
 
+app.use(express.static(__dirname + '/frontend'))
+
 app.listen(PORT, () =>
   console.log(`App is running on ${PORT}`)
 );
