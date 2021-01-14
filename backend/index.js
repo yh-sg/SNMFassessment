@@ -20,9 +20,9 @@ app.use("/auth", require("./routes/auth.route"));
 app.use("/main", require("./routes/main.route"));
 app.use("/currencies", require("./routes/currencies.route"));
 
-app.get("*", (req, res) => {
-  res.status(404).json({ message: "Error!" });
-});
+// app.get("*", (req, res) => {
+//   res.status(404).json({ message: "Error!" });
+// });
 
 
 

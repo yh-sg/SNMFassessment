@@ -20,12 +20,12 @@ const s3 = new AWS.S3({
     secretAccessKey: AWS_S3_SECRET_ASSESSKEY,
 });
 
-// const upload = multer({
-//     dest: process.env.TMP_DIR || '/Users/yh/Desktop/NUS/SNMF/SNMF-assessment/temp'
-// })
+const upload = multer({
+    dest: process.env.TMP_DIR || '/Users/yh/Desktop/NUS/SNMF/SNMF-assessment/temp'
+})
 
-const storage = multer.memoryStorage();
-const upload = multer({storage: storage});
+// const storage = multer.memoryStorage();
+// const upload = multer({storage: storage});
 
 router.post("/", upload.single('filename'), async (req, res) => {
 try {

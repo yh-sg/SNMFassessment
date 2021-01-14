@@ -16,9 +16,7 @@ import { ShowallComponent } from './components/showall.component';
 import { ShowoneComponent } from './components/showone.component';
 import { SignupComponent } from './components/signup.component';
 
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const ROUTES = [
   { path: 'login', component: LoginComponent },
@@ -28,7 +26,7 @@ const ROUTES = [
     canActivate: [AuthService]
   },
   { 
-    path: 'home', component: ShowallComponent,
+    path: '', component: ShowallComponent,
     canActivate: [AuthService]
   },
   { 
@@ -38,7 +36,7 @@ const ROUTES = [
   { path: 'error', component: ErrorComponent },
   { path: 'info', component: InfoComponent},
   { path: 'rates', component: RatesComponent},
-	{ path: '**', redirectTo: '/login', pathMatch: 'full' }
+	{ path: '**', redirectTo: '/', pathMatch: 'full' }
 ]
 
 @NgModule({
@@ -59,8 +57,7 @@ const ROUTES = [
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
-    NgbCollapseModule
-    // NgbModule
+    NgbModule
   ],
   providers: [AuthService, CurrService],
   bootstrap: [AppComponent]
